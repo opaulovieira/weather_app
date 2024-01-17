@@ -3,6 +3,6 @@
 /// More dartdocs go here.
 library;
 
-export 'src/locator_base.dart';
+export 'src/locator.dart';
 
 // TODO: Export any libraries intended for clients of this package.
