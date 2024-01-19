@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:weather/src/model/current.dart';
 import 'package:weather/src/model/exceptions.dart';
@@ -28,7 +26,7 @@ final class WeatherImpl implements Weather {
     final statusCode = response.statusCode;
 
     if (statusCode == 200) {
-      return jsonDecode(response.data);
+      return response.data;
     } else {
       throw UnexpectedError();
     }
