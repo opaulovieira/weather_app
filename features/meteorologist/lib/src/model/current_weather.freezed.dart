@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'current.dart';
+part of 'current_weather.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,12 +14,12 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-Current _$CurrentFromJson(Map<String, dynamic> json) {
-  return _Current.fromJson(json);
+CurrentWeather _$CurrentWeatherFromJson(Map<String, dynamic> json) {
+  return _CurrentWeather.fromJson(json);
 }
 
 /// @nodoc
-mixin _$Current {
+mixin _$CurrentWeather {
   @JsonKey(name: 'dt', fromJson: DateTime.fromMillisecondsSinceEpoch)
   DateTime get dateTime => throw _privateConstructorUsedError;
   @JsonKey(name: 'main')
@@ -29,13 +29,15 @@ mixin _$Current {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $CurrentCopyWith<Current> get copyWith => throw _privateConstructorUsedError;
+  $CurrentWeatherCopyWith<CurrentWeather> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $CurrentCopyWith<$Res> {
-  factory $CurrentCopyWith(Current value, $Res Function(Current) then) =
-      _$CurrentCopyWithImpl<$Res, Current>;
+abstract class $CurrentWeatherCopyWith<$Res> {
+  factory $CurrentWeatherCopyWith(
+          CurrentWeather value, $Res Function(CurrentWeather) then) =
+      _$CurrentWeatherCopyWithImpl<$Res, CurrentWeather>;
   @useResult
   $Res call(
       {@JsonKey(name: 'dt', fromJson: DateTime.fromMillisecondsSinceEpoch)
@@ -47,9 +49,9 @@ abstract class $CurrentCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$CurrentCopyWithImpl<$Res, $Val extends Current>
-    implements $CurrentCopyWith<$Res> {
-  _$CurrentCopyWithImpl(this._value, this._then);
+class _$CurrentWeatherCopyWithImpl<$Res, $Val extends CurrentWeather>
+    implements $CurrentWeatherCopyWith<$Res> {
+  _$CurrentWeatherCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -89,10 +91,11 @@ class _$CurrentCopyWithImpl<$Res, $Val extends Current>
 }
 
 /// @nodoc
-abstract class _$$CurrentImplCopyWith<$Res> implements $CurrentCopyWith<$Res> {
-  factory _$$CurrentImplCopyWith(
-          _$CurrentImpl value, $Res Function(_$CurrentImpl) then) =
-      __$$CurrentImplCopyWithImpl<$Res>;
+abstract class _$$CurrentWeatherImplCopyWith<$Res>
+    implements $CurrentWeatherCopyWith<$Res> {
+  factory _$$CurrentWeatherImplCopyWith(_$CurrentWeatherImpl value,
+          $Res Function(_$CurrentWeatherImpl) then) =
+      __$$CurrentWeatherImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -106,11 +109,11 @@ abstract class _$$CurrentImplCopyWith<$Res> implements $CurrentCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$CurrentImplCopyWithImpl<$Res>
-    extends _$CurrentCopyWithImpl<$Res, _$CurrentImpl>
-    implements _$$CurrentImplCopyWith<$Res> {
-  __$$CurrentImplCopyWithImpl(
-      _$CurrentImpl _value, $Res Function(_$CurrentImpl) _then)
+class __$$CurrentWeatherImplCopyWithImpl<$Res>
+    extends _$CurrentWeatherCopyWithImpl<$Res, _$CurrentWeatherImpl>
+    implements _$$CurrentWeatherImplCopyWith<$Res> {
+  __$$CurrentWeatherImplCopyWithImpl(
+      _$CurrentWeatherImpl _value, $Res Function(_$CurrentWeatherImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -120,7 +123,7 @@ class __$$CurrentImplCopyWithImpl<$Res>
     Object? temperature = null,
     Object? forecasts = null,
   }) {
-    return _then(_$CurrentImpl(
+    return _then(_$CurrentWeatherImpl(
       dateTime: null == dateTime
           ? _value.dateTime
           : dateTime // ignore: cast_nullable_to_non_nullable
@@ -139,16 +142,16 @@ class __$$CurrentImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$CurrentImpl implements _Current {
-  const _$CurrentImpl(
+class _$CurrentWeatherImpl implements _CurrentWeather {
+  const _$CurrentWeatherImpl(
       {@JsonKey(name: 'dt', fromJson: DateTime.fromMillisecondsSinceEpoch)
       required this.dateTime,
       @JsonKey(name: 'main') required this.temperature,
       @JsonKey(name: 'weather') required final List<Forecast> forecasts})
       : _forecasts = forecasts;
 
-  factory _$CurrentImpl.fromJson(Map<String, dynamic> json) =>
-      _$$CurrentImplFromJson(json);
+  factory _$CurrentWeatherImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CurrentWeatherImplFromJson(json);
 
   @override
   @JsonKey(name: 'dt', fromJson: DateTime.fromMillisecondsSinceEpoch)
@@ -167,14 +170,14 @@ class _$CurrentImpl implements _Current {
 
   @override
   String toString() {
-    return 'Current(dateTime: $dateTime, temperature: $temperature, forecasts: $forecasts)';
+    return 'CurrentWeather(dateTime: $dateTime, temperature: $temperature, forecasts: $forecasts)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$CurrentImpl &&
+            other is _$CurrentWeatherImpl &&
             (identical(other.dateTime, dateTime) ||
                 other.dateTime == dateTime) &&
             (identical(other.temperature, temperature) ||
@@ -191,26 +194,28 @@ class _$CurrentImpl implements _Current {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$CurrentImplCopyWith<_$CurrentImpl> get copyWith =>
-      __$$CurrentImplCopyWithImpl<_$CurrentImpl>(this, _$identity);
+  _$$CurrentWeatherImplCopyWith<_$CurrentWeatherImpl> get copyWith =>
+      __$$CurrentWeatherImplCopyWithImpl<_$CurrentWeatherImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$CurrentImplToJson(
+    return _$$CurrentWeatherImplToJson(
       this,
     );
   }
 }
 
-abstract class _Current implements Current {
-  const factory _Current(
+abstract class _CurrentWeather implements CurrentWeather {
+  const factory _CurrentWeather(
           {@JsonKey(name: 'dt', fromJson: DateTime.fromMillisecondsSinceEpoch)
           required final DateTime dateTime,
           @JsonKey(name: 'main') required final Temperature temperature,
           @JsonKey(name: 'weather') required final List<Forecast> forecasts}) =
-      _$CurrentImpl;
+      _$CurrentWeatherImpl;
 
-  factory _Current.fromJson(Map<String, dynamic> json) = _$CurrentImpl.fromJson;
+  factory _CurrentWeather.fromJson(Map<String, dynamic> json) =
+      _$CurrentWeatherImpl.fromJson;
 
   @override
   @JsonKey(name: 'dt', fromJson: DateTime.fromMillisecondsSinceEpoch)
@@ -223,6 +228,6 @@ abstract class _Current implements Current {
   List<Forecast> get forecasts;
   @override
   @JsonKey(ignore: true)
-  _$$CurrentImplCopyWith<_$CurrentImpl> get copyWith =>
+  _$$CurrentWeatherImplCopyWith<_$CurrentWeatherImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -1,10 +1,10 @@
 import 'package:dio/dio.dart';
-import 'package:weather/src/model/current.dart';
-import 'package:weather/src/model/exceptions.dart';
-import 'package:weather/src/weather.dart';
+import 'package:meteorologist/src/meteorologist.dart';
+import 'package:meteorologist/src/model/current_weather.dart';
+import 'package:meteorologist/src/model/exceptions.dart';
 
-final class WeatherImpl implements Weather {
-  const WeatherImpl({
+final class MeteorologistImpl implements Meteorologist {
+  const MeteorologistImpl({
     required this.dio,
     required this.apiKey,
   });
@@ -33,16 +33,16 @@ final class WeatherImpl implements Weather {
   }
 
   @override
-  Future<Current> getCurrent(double longitude, double latitude) async {
+  Future<CurrentWeather> getCurrent(double longitude, double latitude) async {
     final rawData = await _rawFetch(longitude, latitude);
 
-    final data = Current.fromJson(rawData);
+    final data = CurrentWeather.fromJson(rawData);
 
     return data;
   }
 
   @override
-  String? getAssetUrl(Current current) {
+  String? getAssetUrl(CurrentWeather current) {
     final assetUrl = current.forecasts.isEmpty //
         ? null
         : '$_assetUrl${current.forecasts[0].code}@2x.png';
