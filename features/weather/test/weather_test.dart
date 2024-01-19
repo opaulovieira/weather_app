@@ -18,7 +18,7 @@ void main() {
 
   setUp(() {
     mockAdapter.onGet(
-      "$baseUrl?lat=0.0&lon=0.0&appid=apiKey",
+      "$baseUrl?lat=0.0&lon=0.0&units=metric&appid=apiKey",
       (server) => server.reply(
         200,
         {
@@ -97,7 +97,7 @@ void main() {
       'should throw a UnexpectedError exception when statusCode is not 200',
       () {
         mockAdapter.onGet(
-          "$baseUrl?lat=0.0&lon=0.0&appid=apiKey",
+          "$baseUrl?lat=0.0&lon=0.0&units=metric&appid=apiKey",
           (server) => server.reply(201, null),
         );
 

@@ -20,7 +20,7 @@ final class WeatherImpl implements Weather {
     double latitude,
   ) async {
     final response = await dio.get(
-      "$_url?lat=$latitude&lon=$longitude&appid=$apiKey",
+      "$_url?lat=$latitude&lon=$longitude&units=metric&appid=$apiKey",
     );
 
     final statusCode = response.statusCode;
