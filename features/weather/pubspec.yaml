@@ -6,6 +6,7 @@ environment:
   sdk: ^3.2.4
 
 dependencies:
+  dio: ^5.4.0
 
 dev_dependencies:
   lints: ^2.1.0
