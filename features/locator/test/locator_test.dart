@@ -63,6 +63,7 @@ void main() {
       });
 
       test('should return the current Location', () async {
+        await locator.checkPermission();
         final location = await locator.getLocation();
 
         expect(
@@ -73,21 +74,6 @@ void main() {
           ),
         );
       });
-
-      test(
-        'should throw the ServiceIsNotEnabled exception when the service is not enabled',
-        () {
-          GeolocatorPlatform.instance = TestGeolocatorPlatform(
-            checkPermissionResponse: LocationPermission.whileInUse,
-            isLocationServiceEnabledResponse: false,
-          );
-
-          expect(
-            () => locator.getLocation(),
-            throwsA((isA<ServiceIsNotEnabled>())),
-          );
-        },
-      );
     });
 
     group('when LocationPermission is deniedForever', () {
@@ -101,7 +87,10 @@ void main() {
         'should throw the DeniedUntilChangedOnAppSettings exception',
         () {
           expect(
-            () => locator.getLocation(),
+            () async {
+              await locator.checkPermission();
+              return locator.getLocation();
+            },
             throwsA((isA<DeniedUntilChangedOnAppSettings>())),
           );
         },
@@ -119,7 +108,10 @@ void main() {
         'should throw the WebBrowserHasNoPermissionAPI exception',
         () {
           expect(
-            () => locator.getLocation(),
+            () async {
+              await locator.checkPermission();
+              return locator.getLocation();
+            },
             throwsA((isA<WebBrowserHasNoPermissionAPI>())),
           );
         },
@@ -136,15 +128,17 @@ void main() {
       test(
         'should request for the permission once',
         () async {
+          await locator.checkPermission();
           await locator.getLocation();
 
-          expectAsync0(locator.requestPermission, max: 1)();
+          expectAsync0(locator.checkPermission, max: 1)();
         },
       );
 
       test(
         'should allow the service to fetch the position since permission is now given',
         () async {
+          await locator.checkPermission();
           final location = await locator.getLocation();
 
           expect(
@@ -158,7 +152,7 @@ void main() {
       );
 
       test(
-        'should throw the UserDoNotAllowService exception since permission is still not given',
+        'should throw the DeniedUntilChangedOnAppSettings exception since permission is still not given',
         () {
           GeolocatorPlatform.instance = TestGeolocatorPlatform(
             checkPermissionResponse: LocationPermission.denied,
@@ -166,8 +160,11 @@ void main() {
           );
 
           expect(
-            () => locator.getLocation(),
-            throwsA((isA<UserDoNotAllowService>())),
+            () async {
+              await locator.checkPermission();
+              return locator.getLocation();
+            },
+            throwsA((isA<DeniedUntilChangedOnAppSettings>())),
           );
         },
       );
