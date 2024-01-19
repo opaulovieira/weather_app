@@ -9,9 +9,7 @@ part of 'current.dart';
 _$CurrentImpl _$$CurrentImplFromJson(Map<String, dynamic> json) =>
     _$CurrentImpl(
       dateTime: DateTime.fromMillisecondsSinceEpoch(json['dt'] as int),
-      sunrise: DateTime.fromMillisecondsSinceEpoch(json['sunrise'] as int),
-      sunset: DateTime.fromMillisecondsSinceEpoch(json['sunset'] as int),
-      temperature: (json['temp'] as num).toDouble(),
+      temperature: Temperature.fromJson(json['main'] as Map<String, dynamic>),
       forecasts: (json['weather'] as List<dynamic>)
           .map((e) => Forecast.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -20,8 +18,6 @@ _$CurrentImpl _$$CurrentImplFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$CurrentImplToJson(_$CurrentImpl instance) =>
     <String, dynamic>{
       'dt': instance.dateTime.toIso8601String(),
-      'sunrise': instance.sunrise.toIso8601String(),
-      'sunset': instance.sunset.toIso8601String(),
-      'temp': instance.temperature,
+      'main': instance.temperature,
       'weather': instance.forecasts,
     };

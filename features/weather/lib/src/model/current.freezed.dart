@@ -22,12 +22,8 @@ Current _$CurrentFromJson(Map<String, dynamic> json) {
 mixin _$Current {
   @JsonKey(name: 'dt', fromJson: DateTime.fromMillisecondsSinceEpoch)
   DateTime get dateTime => throw _privateConstructorUsedError;
-  @JsonKey(fromJson: DateTime.fromMillisecondsSinceEpoch)
-  DateTime get sunrise => throw _privateConstructorUsedError;
-  @JsonKey(fromJson: DateTime.fromMillisecondsSinceEpoch)
-  DateTime get sunset => throw _privateConstructorUsedError;
-  @JsonKey(name: 'temp')
-  double get temperature => throw _privateConstructorUsedError;
+  @JsonKey(name: 'main')
+  Temperature get temperature => throw _privateConstructorUsedError;
   @JsonKey(name: 'weather')
   List<Forecast> get forecasts => throw _privateConstructorUsedError;
 
@@ -44,10 +40,10 @@ abstract class $CurrentCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: 'dt', fromJson: DateTime.fromMillisecondsSinceEpoch)
       DateTime dateTime,
-      @JsonKey(fromJson: DateTime.fromMillisecondsSinceEpoch) DateTime sunrise,
-      @JsonKey(fromJson: DateTime.fromMillisecondsSinceEpoch) DateTime sunset,
-      @JsonKey(name: 'temp') double temperature,
+      @JsonKey(name: 'main') Temperature temperature,
       @JsonKey(name: 'weather') List<Forecast> forecasts});
+
+  $TemperatureCopyWith<$Res> get temperature;
 }
 
 /// @nodoc
@@ -64,8 +60,6 @@ class _$CurrentCopyWithImpl<$Res, $Val extends Current>
   @override
   $Res call({
     Object? dateTime = null,
-    Object? sunrise = null,
-    Object? sunset = null,
     Object? temperature = null,
     Object? forecasts = null,
   }) {
@@ -74,23 +68,23 @@ class _$CurrentCopyWithImpl<$Res, $Val extends Current>
           ? _value.dateTime
           : dateTime // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      sunrise: null == sunrise
-          ? _value.sunrise
-          : sunrise // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      sunset: null == sunset
-          ? _value.sunset
-          : sunset // ignore: cast_nullable_to_non_nullable
-              as DateTime,
       temperature: null == temperature
           ? _value.temperature
           : temperature // ignore: cast_nullable_to_non_nullable
-              as double,
+              as Temperature,
       forecasts: null == forecasts
           ? _value.forecasts
           : forecasts // ignore: cast_nullable_to_non_nullable
               as List<Forecast>,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $TemperatureCopyWith<$Res> get temperature {
+    return $TemperatureCopyWith<$Res>(_value.temperature, (value) {
+      return _then(_value.copyWith(temperature: value) as $Val);
+    });
   }
 }
 
@@ -104,10 +98,11 @@ abstract class _$$CurrentImplCopyWith<$Res> implements $CurrentCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: 'dt', fromJson: DateTime.fromMillisecondsSinceEpoch)
       DateTime dateTime,
-      @JsonKey(fromJson: DateTime.fromMillisecondsSinceEpoch) DateTime sunrise,
-      @JsonKey(fromJson: DateTime.fromMillisecondsSinceEpoch) DateTime sunset,
-      @JsonKey(name: 'temp') double temperature,
+      @JsonKey(name: 'main') Temperature temperature,
       @JsonKey(name: 'weather') List<Forecast> forecasts});
+
+  @override
+  $TemperatureCopyWith<$Res> get temperature;
 }
 
 /// @nodoc
@@ -122,8 +117,6 @@ class __$$CurrentImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? dateTime = null,
-    Object? sunrise = null,
-    Object? sunset = null,
     Object? temperature = null,
     Object? forecasts = null,
   }) {
@@ -132,18 +125,10 @@ class __$$CurrentImplCopyWithImpl<$Res>
           ? _value.dateTime
           : dateTime // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      sunrise: null == sunrise
-          ? _value.sunrise
-          : sunrise // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      sunset: null == sunset
-          ? _value.sunset
-          : sunset // ignore: cast_nullable_to_non_nullable
-              as DateTime,
       temperature: null == temperature
           ? _value.temperature
           : temperature // ignore: cast_nullable_to_non_nullable
-              as double,
+              as Temperature,
       forecasts: null == forecasts
           ? _value._forecasts
           : forecasts // ignore: cast_nullable_to_non_nullable
@@ -158,11 +143,7 @@ class _$CurrentImpl implements _Current {
   const _$CurrentImpl(
       {@JsonKey(name: 'dt', fromJson: DateTime.fromMillisecondsSinceEpoch)
       required this.dateTime,
-      @JsonKey(fromJson: DateTime.fromMillisecondsSinceEpoch)
-      required this.sunrise,
-      @JsonKey(fromJson: DateTime.fromMillisecondsSinceEpoch)
-      required this.sunset,
-      @JsonKey(name: 'temp') required this.temperature,
+      @JsonKey(name: 'main') required this.temperature,
       @JsonKey(name: 'weather') required final List<Forecast> forecasts})
       : _forecasts = forecasts;
 
@@ -173,14 +154,8 @@ class _$CurrentImpl implements _Current {
   @JsonKey(name: 'dt', fromJson: DateTime.fromMillisecondsSinceEpoch)
   final DateTime dateTime;
   @override
-  @JsonKey(fromJson: DateTime.fromMillisecondsSinceEpoch)
-  final DateTime sunrise;
-  @override
-  @JsonKey(fromJson: DateTime.fromMillisecondsSinceEpoch)
-  final DateTime sunset;
-  @override
-  @JsonKey(name: 'temp')
-  final double temperature;
+  @JsonKey(name: 'main')
+  final Temperature temperature;
   final List<Forecast> _forecasts;
   @override
   @JsonKey(name: 'weather')
@@ -192,7 +167,7 @@ class _$CurrentImpl implements _Current {
 
   @override
   String toString() {
-    return 'Current(dateTime: $dateTime, sunrise: $sunrise, sunset: $sunset, temperature: $temperature, forecasts: $forecasts)';
+    return 'Current(dateTime: $dateTime, temperature: $temperature, forecasts: $forecasts)';
   }
 
   @override
@@ -202,8 +177,6 @@ class _$CurrentImpl implements _Current {
             other is _$CurrentImpl &&
             (identical(other.dateTime, dateTime) ||
                 other.dateTime == dateTime) &&
-            (identical(other.sunrise, sunrise) || other.sunrise == sunrise) &&
-            (identical(other.sunset, sunset) || other.sunset == sunset) &&
             (identical(other.temperature, temperature) ||
                 other.temperature == temperature) &&
             const DeepCollectionEquality()
@@ -212,8 +185,8 @@ class _$CurrentImpl implements _Current {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, dateTime, sunrise, sunset,
-      temperature, const DeepCollectionEquality().hash(_forecasts));
+  int get hashCode => Object.hash(runtimeType, dateTime, temperature,
+      const DeepCollectionEquality().hash(_forecasts));
 
   @JsonKey(ignore: true)
   @override
@@ -233,11 +206,7 @@ abstract class _Current implements Current {
   const factory _Current(
           {@JsonKey(name: 'dt', fromJson: DateTime.fromMillisecondsSinceEpoch)
           required final DateTime dateTime,
-          @JsonKey(fromJson: DateTime.fromMillisecondsSinceEpoch)
-          required final DateTime sunrise,
-          @JsonKey(fromJson: DateTime.fromMillisecondsSinceEpoch)
-          required final DateTime sunset,
-          @JsonKey(name: 'temp') required final double temperature,
+          @JsonKey(name: 'main') required final Temperature temperature,
           @JsonKey(name: 'weather') required final List<Forecast> forecasts}) =
       _$CurrentImpl;
 
@@ -247,14 +216,8 @@ abstract class _Current implements Current {
   @JsonKey(name: 'dt', fromJson: DateTime.fromMillisecondsSinceEpoch)
   DateTime get dateTime;
   @override
-  @JsonKey(fromJson: DateTime.fromMillisecondsSinceEpoch)
-  DateTime get sunrise;
-  @override
-  @JsonKey(fromJson: DateTime.fromMillisecondsSinceEpoch)
-  DateTime get sunset;
-  @override
-  @JsonKey(name: 'temp')
-  double get temperature;
+  @JsonKey(name: 'main')
+  Temperature get temperature;
   @override
   @JsonKey(name: 'weather')
   List<Forecast> get forecasts;

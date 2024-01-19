@@ -8,6 +8,8 @@ void main() {
   final dio = Dio();
   final mockAdapter = DioAdapter(dio: dio);
 
+  const baseUrl = "https://api.openweathermap.org/data/2.5/weather";
+
   late Weather weather;
 
   setUpAll(() {
@@ -16,39 +18,58 @@ void main() {
 
   setUp(() {
     mockAdapter.onGet(
-      "https://api.openweathermap.org/data/3.0/onecall?lat=0.0&lon=0.0&exclude=minutely,hourly,daily&units=metric&lang=en&appid=apiKey",
+      "$baseUrl?lat=0.0&lon=0.0&units=metric&lang=en&appid=apiKey",
       (server) => server.reply(
         200,
         '''
         {
-          "lat": 33.44,
-          "lon": -94.04,
-          "timezone": "America/Chicago",
-          "timezone_offset": -18000,
-          "current": {
-            "dt": 1684929490,
-            "sunrise": 1684926645,
-            "sunset": 1684977332,
-            "temp": 292.55,
-            "feels_like": 292.87,
-            "pressure": 1014,
-            "humidity": 89,
-            "dew_point": 290.69,
-            "uvi": 0.16,
-            "clouds": 53,
-            "visibility": 10000,
-            "wind_speed": 3.13,
-            "wind_deg": 93,
-            "wind_gust": 6.71,
-            "weather": [
-              {
-                "id": 803,
-                "main": "Clouds",
-                "description": "broken clouds",
-                "icon": "04d"
-              }
-            ]
-          }
+          "coord": {
+            "lon": 10.99,
+            "lat": 44.34
+          },
+          "weather": [
+            {
+              "id": 501,
+              "main": "Rain",
+              "description": "moderate rain",
+              "icon": "10d"
+            }
+          ],
+          "base": "stations",
+          "main": {
+            "temp": 298.48,
+            "feels_like": 298.74,
+            "temp_min": 297.56,
+            "temp_max": 300.05,
+            "pressure": 1015,
+            "humidity": 64,
+            "sea_level": 1015,
+            "grnd_level": 933
+          },
+          "visibility": 10000,
+          "wind": {
+            "speed": 0.62,
+            "deg": 349,
+            "gust": 1.18
+          },
+          "rain": {
+            "1h": 3.16
+          },
+          "clouds": {
+            "all": 100
+          },
+          "dt": 1661870592,
+          "sys": {
+            "type": 2,
+            "id": 2075663,
+            "country": "IT",
+            "sunrise": 1661834187,
+            "sunset": 1661882248
+          },
+          "timezone": 7200,
+          "id": 3163858,
+          "name": "Zocca",
+          "cod": 200
         }
         ''',
       ),
@@ -66,16 +87,19 @@ void main() {
       expect(
         current,
         Current(
-          dateTime: DateTime.fromMillisecondsSinceEpoch(1684929490),
-          sunrise: DateTime.fromMillisecondsSinceEpoch(1684926645),
-          sunset: DateTime.fromMillisecondsSinceEpoch(1684977332),
-          temperature: 292.55,
+          dateTime: DateTime.fromMillisecondsSinceEpoch(1661870592),
+          temperature: Temperature(
+            value: 298.48,
+            feelsLike: 298.74,
+            min: 297.56,
+            max: 300.05,
+          ),
           forecasts: [
             Forecast(
-              id: 803,
-              main: 'Clouds',
-              description: 'broken clouds',
-              code: '04d',
+              id: 501,
+              main: 'Rain',
+              description: 'moderate rain',
+              code: '10d',
             ),
           ],
         ),
@@ -86,7 +110,7 @@ void main() {
       'should throw a UnexpectedError exception when statusCode is not 200',
       () {
         mockAdapter.onGet(
-          "https://api.openweathermap.org/data/3.0/onecall?lat=0.0&lon=0.0&exclude=minutely,hourly,daily&units=metric&lang=en&appid=apiKey",
+          "$baseUrl?lat=0.0&lon=0.0&units=metric&lang=en&appid=apiKey",
           (server) => server.reply(201, null),
         );
 

@@ -4,7 +4,7 @@ part 'forecast.freezed.dart';
 part 'forecast.g.dart';
 
 @freezed
-sealed class Forecast with _$Forecast {
+class Forecast with _$Forecast {
   const factory Forecast({
     required int id,
     required String main,

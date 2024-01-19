@@ -12,7 +12,7 @@ final class WeatherImpl implements Weather {
   });
 
   static const _assetUrl = "https://openweathermap.org/img/wn/";
-  static const _url = "https://api.openweathermap.org/data/3.0/onecall";
+  static const _url = "https://api.openweathermap.org/data/2.5/weather";
 
   final Dio dio;
   final String apiKey;
@@ -22,13 +22,13 @@ final class WeatherImpl implements Weather {
     double latitude,
   ) async {
     final response = await dio.get(
-      "$_url?lat=$latitude&lon=$longitude&exclude=minutely,hourly,daily&units=metric&lang=en&appid=$apiKey",
+      "$_url?lat=$latitude&lon=$longitude&appid=$apiKey",
     );
 
     final statusCode = response.statusCode;
 
     if (statusCode == 200) {
-      return jsonDecode(response.data)['current'];
+      return jsonDecode(response.data);
     } else {
       throw UnexpectedError();
     }
