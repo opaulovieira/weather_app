@@ -18,15 +18,11 @@ void main() {
 
   setUp(() {
     mockAdapter.onGet(
-      "$baseUrl?lat=0.0&lon=0.0&units=metric&lang=en&appid=apiKey",
+      "$baseUrl?lat=0.0&lon=0.0&appid=apiKey",
       (server) => server.reply(
         200,
-        '''
         {
-          "coord": {
-            "lon": 10.99,
-            "lat": 44.34
-          },
+          "coord": {"lon": 10.99, "lat": 44.34},
           "weather": [
             {
               "id": 501,
@@ -47,17 +43,9 @@ void main() {
             "grnd_level": 933
           },
           "visibility": 10000,
-          "wind": {
-            "speed": 0.62,
-            "deg": 349,
-            "gust": 1.18
-          },
-          "rain": {
-            "1h": 3.16
-          },
-          "clouds": {
-            "all": 100
-          },
+          "wind": {"speed": 0.62, "deg": 349, "gust": 1.18},
+          "rain": {"1h": 3.16},
+          "clouds": {"all": 100},
           "dt": 1661870592,
           "sys": {
             "type": 2,
@@ -70,8 +58,7 @@ void main() {
           "id": 3163858,
           "name": "Zocca",
           "cod": 200
-        }
-        ''',
+        },
       ),
     );
   });
@@ -110,7 +97,7 @@ void main() {
       'should throw a UnexpectedError exception when statusCode is not 200',
       () {
         mockAdapter.onGet(
-          "$baseUrl?lat=0.0&lon=0.0&units=metric&lang=en&appid=apiKey",
+          "$baseUrl?lat=0.0&lon=0.0&appid=apiKey",
           (server) => server.reply(201, null),
         );
 
