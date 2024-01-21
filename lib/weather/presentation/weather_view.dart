@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:weather/weather/data/exceptions.dart';
+import 'package:weather/weather/data/model.dart';
 import 'package:weather/weather/presentation/weather_presenter.dart';
 
 class WeatherView extends StatefulWidget {
@@ -37,25 +38,44 @@ class _WeatherViewState extends State<WeatherView> {
           ),
         ],
       ),
-      body: ValueListenableBuilder(
-        valueListenable: widget.presenter,
-        builder: (context, value, child) {
-          return switch (value) {
-            // TODO: Handle this case.
-            Loading() => const Center(
-                child: CircularProgressIndicator(),
-              ),
-            // TODO: Handle this case.
-            Success() => const Center(
-                child: Text('Success'),
-              ),
-            // TODO: Handle this case.
-            Failure(error: final WeatherRepositoryException error) => Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 32.0,
-                  vertical: 64.0,
+      body: Padding(
+        padding: const EdgeInsets.only(
+          left: 32.0,
+          right: 32.0,
+          top: 64.0,
+        ),
+        child: ValueListenableBuilder(
+          valueListenable: widget.presenter,
+          builder: (context, value, child) {
+            return switch (value) {
+              Loading() => const Center(
+                  child: CircularProgressIndicator(),
                 ),
-                child: Center(
+              Success(data: final Weather weather) => Center(
+                  child: Column(
+                    children: [
+                      Forecast(weather: weather),
+                      const SizedBox(height: 8.0),
+                      Card(
+                        color: Theme.of(context).colorScheme.primaryContainer,
+                        elevation: 8.0,
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: FittedBox(
+                            child: Temperature(weather: weather),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 16.0),
+                      TextButton(
+                        onPressed: widget.presenter.requestData,
+                        child: const Text('Get weather'),
+                      ),
+                      const Spacer(),
+                    ],
+                  ),
+                ),
+              Failure(error: final WeatherRepositoryException error) => Center(
                   child: Text(
                     switch (error) {
                       FailedToGetWeather() =>
@@ -67,10 +87,118 @@ class _WeatherViewState extends State<WeatherView> {
                     },
                   ),
                 ),
-              ),
-          };
-        },
+            };
+          },
+        ),
       ),
     );
+  }
+}
+
+class Temperature extends StatelessWidget {
+  const Temperature({
+    super.key,
+    required this.weather,
+  });
+
+  final Weather weather;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Row(
+              children: [
+                Text(
+                  '${weather.maxTemperature} °C',
+                  style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                        color: Colors.red.withOpacity(0.7),
+                        fontWeight: FontWeight.bold,
+                      ),
+                ),
+                const Icon(
+                  Icons.arrow_upward,
+                  size: 16.0,
+                  color: Colors.red,
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                Text(
+                  '${weather.minTemperature} °C',
+                  style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                        color: Colors.blue.withOpacity(0.7),
+                        fontWeight: FontWeight.bold,
+                      ),
+                ),
+                const Icon(
+                  Icons.arrow_downward,
+                  size: 16.0,
+                  color: Colors.blue,
+                ),
+              ],
+            ),
+          ],
+        ),
+        const SizedBox(width: 8.0),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Text(
+              '${weather.temperature} °C',
+              style: Theme.of(context).textTheme.displayLarge?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+            ),
+            const SizedBox(height: 4.0),
+            Text(
+              '(feels like: ${weather.feelsLikeTemperature} °C)',
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
+          ],
+        )
+      ],
+    );
+  }
+}
+
+class Forecast extends StatelessWidget {
+  const Forecast({
+    super.key,
+    required this.weather,
+  });
+
+  final Weather weather;
+
+  @override
+  Widget build(BuildContext context) {
+    if (weather.forecastAssetUrl case final String forecast) {
+      return Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.primary,
+              shape: BoxShape.circle,
+            ),
+            child: Image.network(forecast),
+          ),
+          const SizedBox(height: 4.0),
+          Text(
+            '(${weather.forecastDescription})',
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
+        ],
+      );
+    } else {
+      return const SizedBox.shrink();
+    }
   }
 }

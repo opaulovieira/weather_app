@@ -4,15 +4,17 @@ import 'package:weather/weather/data/model.dart';
 import 'package:weather/weather/data/use_cases.dart';
 
 final class WeatherPresenter extends ValueNotifier<WeatherState> {
-  WeatherPresenter({required this.getWeather}) : super(Loading());
+  WeatherPresenter({required GetWeatherUseCase getWeather})
+      : _getWeather = getWeather,
+        super(Loading());
 
-  final GetWeatherUseCase getWeather;
+  final GetWeatherUseCase _getWeather;
 
   Future<void> requestData() async {
     value = Loading();
 
     try {
-      final weather = await getWeather();
+      final weather = await _getWeather();
 
       value = Success(data: weather);
     } on WeatherRepositoryException catch (error) {
