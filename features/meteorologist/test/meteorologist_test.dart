@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:http_mock_adapter/http_mock_adapter.dart';
+import 'package:meteorologist/meteorologist.dart';
+import 'package:meteorologist/src/meteorologist_impl.dart';
 import 'package:test/test.dart';
-import 'package:weather/src/weather_impl.dart';
-import 'package:weather/weather.dart';
 
 void main() {
   final dio = Dio();
@@ -10,7 +10,7 @@ void main() {
 
   const baseUrl = "https://api.openweathermap.org/data/2.5/weather";
 
-  late Weather weather;
+  late Meteorologist weather;
 
   setUpAll(() {
     dio.httpClientAdapter = mockAdapter;
@@ -63,17 +63,17 @@ void main() {
     );
   });
 
-  group('Weather', () {
+  group('Meteorologist', () {
     setUp(() {
-      weather = WeatherImpl(dio: dio, apiKey: 'apiKey');
+      weather = MeteorologistImpl(dio: dio, apiKey: 'apiKey');
     });
 
-    test('should correctly map to Current model', () async {
-      final current = await weather.getCurrent(0.0, 0.0);
+    test('should correctly map to CurrentWeather model', () async {
+      final currentWeather = await weather.getCurrent(0.0, 0.0);
 
       expect(
-        current,
-        Current(
+        currentWeather,
+        CurrentWeather(
           dateTime: DateTime.fromMillisecondsSinceEpoch(1661870592),
           temperature: Temperature(
             value: 298.48,

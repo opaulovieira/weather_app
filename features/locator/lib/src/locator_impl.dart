@@ -21,30 +21,16 @@ final class LocatorImpl implements Locator {
   }
 
   @override
-  Future<bool> checkIfEnabled() async {
-    final hasUserPermission = await checkPermission();
-
-    if (hasUserPermission) {
-      return await Geolocator.isLocationServiceEnabled();
-    } else {
-      return false;
-    }
-  }
+  Future<bool> checkIfEnabled() => Geolocator.isLocationServiceEnabled();
 
   @override
   Future<Location> getLocation() async {
-    final isEnabled = await checkIfEnabled();
+    final position = await Geolocator.getCurrentPosition();
 
-    if (isEnabled) {
-      final position = await Geolocator.getCurrentPosition();
-
-      return Location(
-        longitude: position.longitude,
-        latitude: position.latitude,
-      );
-    } else {
-      throw ServiceIsNotEnabled();
-    }
+    return Location(
+      longitude: position.longitude,
+      latitude: position.latitude,
+    );
   }
 
   @override
@@ -54,7 +40,7 @@ final class LocatorImpl implements Locator {
     if (requestedPermission.isAllowed) {
       return true;
     } else {
-      throw UserDoNotAllowService();
+      throw DeniedUntilChangedOnAppSettings();
     }
   }
 }

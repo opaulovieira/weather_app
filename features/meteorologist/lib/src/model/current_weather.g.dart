@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'current.dart';
+part of 'current_weather.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$CurrentImpl _$$CurrentImplFromJson(Map<String, dynamic> json) =>
-    _$CurrentImpl(
+_$CurrentWeatherImpl _$$CurrentWeatherImplFromJson(Map<String, dynamic> json) =>
+    _$CurrentWeatherImpl(
       dateTime: DateTime.fromMillisecondsSinceEpoch(json['dt'] as int),
       temperature: Temperature.fromJson(json['main'] as Map<String, dynamic>),
       forecasts: (json['weather'] as List<dynamic>)
@@ -15,7 +15,8 @@ _$CurrentImpl _$$CurrentImplFromJson(Map<String, dynamic> json) =>
           .toList(),
     );
 
-Map<String, dynamic> _$$CurrentImplToJson(_$CurrentImpl instance) =>
+Map<String, dynamic> _$$CurrentWeatherImplToJson(
+        _$CurrentWeatherImpl instance) =>
     <String, dynamic>{
       'dt': instance.dateTime.toIso8601String(),
       'main': instance.temperature,

@@ -1,9 +1,5 @@
-sealed class LocatorException {}
+sealed class LocatorException implements Exception {}
 
 final class WebBrowserHasNoPermissionAPI implements LocatorException {}
 
 final class DeniedUntilChangedOnAppSettings implements LocatorException {}
-
-final class UserDoNotAllowService implements LocatorException {}
-
-final class ServiceIsNotEnabled implements LocatorException {}
