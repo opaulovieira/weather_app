@@ -32,5 +32,5 @@ Also, some web browsers do not have the Permission API to handle the location in
 
 ![Login_mobile](https://github.com/opaulovieira/weather_app/blob/main/images/1.png)
 ![Weather_mobile](https://github.com/opaulovieira/weather_app/blob/main/images/3.png)
-![Login_web](https://github.com/opaulovieira/weather_app/blob/develop/main/2.PNG)
+![Login_web](https://github.com/opaulovieira/weather_app/blob/main/images/2.PNG)
 ![Weather_mobile](https://github.com/opaulovieira/weather_app/blob/main/images/4.PNG)
