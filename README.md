@@ -30,7 +30,7 @@ Remember this project uses the user's device's location. So be aware for a dialo
 
 Also, some web browsers do not have the Permission API to handle the location information. I have tested using Chrome Browser and I recommend it for testing. 
 
-![Login_mobile](https://github.com/opaulovieira/weather_app/blob/develop/images/1.png)
-![Weather_mobile](https://github.com/opaulovieira/weather_app/blob/develop/images/3.png)
-![Login_web](https://github.com/opaulovieira/weather_app/blob/develop/images/2.PNG)
-![Weather_mobile](https://github.com/opaulovieira/weather_app/blob/develop/images/4.PNG)
+![Login_mobile](https://github.com/opaulovieira/weather_app/blob/main/images/1.png)
+![Weather_mobile](https://github.com/opaulovieira/weather_app/blob/main/images/3.png)
+![Login_web](https://github.com/opaulovieira/weather_app/blob/develop/main/2.PNG)
+![Weather_mobile](https://github.com/opaulovieira/weather_app/blob/main/images/4.PNG)
