@@ -1,8 +1,20 @@
 import 'dart:async';
 
+import 'package:flutter_riverpod/flutter_riverpod.dart' hide Locator;
 import 'package:locator/locator.dart';
 import 'package:meteorologist/meteorologist.dart';
+import 'package:weather/di.dart';
 import 'package:weather/weather/data/model.dart';
+
+final weatherRepositoryProvider = Provider.autoDispose((ref) {
+  final locator = ref.read(locatorProvider);
+  final meteorologist = ref.read(meteorologistProvider);
+
+  return WeatherRepository(
+    locator: locator,
+    meteorologist: meteorologist,
+  );
+});
 
 final class WeatherRepository {
   const WeatherRepository({
