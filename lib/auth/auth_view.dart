@@ -1,25 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:weather/auth/auth_presenter.dart';
 import 'package:weather/auth/data/user.dart';
 
 class AuthView extends StatefulWidget {
-  const AuthView({
-    super.key,
-    required this.presenter,
-  });
+  const AuthView({super.key});
 
-  final AuthPresenter presenter;
+  static const route = '/';
 
   @override
   State<AuthView> createState() => _AuthViewState();
 }
 
-class _AuthViewState extends State<AuthView> {
+class _AuthViewState extends State<AuthView>
+    with AutomaticKeepAliveClientMixin {
   final _formKey = GlobalKey<FormState>();
   final _emailTEC = TextEditingController();
   final _emailFN = FocusNode();
   final _passwordTEC = TextEditingController();
   final _passwordFN = FocusNode();
+
+  late final presenter =
+      ProviderScope.containerOf(context).read(authPresenterProvider);
 
   @override
   void initState() {
@@ -27,13 +29,13 @@ class _AuthViewState extends State<AuthView> {
 
     _emailFN.addListener(() {
       if (_emailFN.hasFocus) {
-        widget.presenter.waitForUserCredentials();
+        presenter.waitForUserCredentials();
       }
     });
 
     _passwordFN.addListener(() {
       if (_passwordFN.hasFocus) {
-        widget.presenter.waitForUserCredentials();
+        presenter.waitForUserCredentials();
       }
     });
   }
@@ -50,6 +52,8 @@ class _AuthViewState extends State<AuthView> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
+
     return Scaffold(
       body: Form(
         key: _formKey,
@@ -66,7 +70,7 @@ class _AuthViewState extends State<AuthView> {
                     size: 128.0,
                   ),
                   ValueListenableBuilder<AuthState>(
-                    valueListenable: widget.presenter,
+                    valueListenable: presenter,
                     builder: (context, state, child) {
                       return _DecoratedTextFormField(
                         label: 'Email',
@@ -95,7 +99,7 @@ class _AuthViewState extends State<AuthView> {
                   ),
                   const SizedBox(height: 8.0),
                   ValueListenableBuilder<AuthState>(
-                    valueListenable: widget.presenter,
+                    valueListenable: presenter,
                     builder: (context, state, child) {
                       return _DecoratedTextFormField(
                         label: 'Password',
@@ -135,18 +139,16 @@ class _AuthViewState extends State<AuthView> {
                           _formKey.currentState?.validate() ?? false;
 
                       if (isValid) {
-                        await widget.presenter.validateCredentials(
+                        await presenter.validateCredentials(
                           User(
                             id: _emailTEC.text,
                             password: int.parse(_passwordTEC.text),
                           ),
                         );
-
-                        final isValidated = widget.presenter.isValid;
                       }
                     },
                     child: ValueListenableBuilder<AuthState>(
-                      valueListenable: widget.presenter,
+                      valueListenable: presenter,
                       builder: (context, state, child) {
                         return switch (state) {
                           AuthState.waitingForUser ||
@@ -167,6 +169,9 @@ class _AuthViewState extends State<AuthView> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
 
 class _DecoratedTextFormField extends StatelessWidget {

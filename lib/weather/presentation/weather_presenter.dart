@@ -1,7 +1,14 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:weather/weather/data/exceptions.dart';
 import 'package:weather/weather/data/model.dart';
 import 'package:weather/weather/data/use_cases.dart';
+
+final weatherPresenterProvider = Provider.autoDispose((ref) {
+  final getWeather = ref.read(getWeatherUseCaseProvider);
+
+  return WeatherPresenter(getWeather: getWeather);
+});
 
 final class WeatherPresenter extends ValueNotifier<WeatherState> {
   WeatherPresenter({required GetWeatherUseCase getWeather})

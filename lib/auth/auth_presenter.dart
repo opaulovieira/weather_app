@@ -1,6 +1,13 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:weather/auth/data/use_case.dart';
 import 'package:weather/auth/data/user.dart';
+
+final authPresenterProvider = ChangeNotifierProvider.autoDispose((ref) {
+  final validateCredentials = ref.read(validateCredentialsUseCaseProvider);
+
+  return AuthPresenter(validateCredentials: validateCredentials);
+});
 
 class AuthPresenter extends ValueNotifier<AuthState> {
   AuthPresenter({
@@ -17,9 +24,11 @@ class AuthPresenter extends ValueNotifier<AuthState> {
     value = isValid ? AuthState.authenticated : AuthState.unauthenticated;
   }
 
+  void logout() => value = AuthState.unauthenticated;
+
   void waitForUserCredentials() => value = AuthState.waitingForUser;
 
-  bool get isValid => value == AuthState.authenticated;
+  bool get isAuthenticated => value == AuthState.authenticated;
 }
 
 enum AuthState {

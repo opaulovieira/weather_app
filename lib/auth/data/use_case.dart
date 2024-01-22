@@ -1,4 +1,9 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:weather/auth/data/user.dart';
+
+final validateCredentialsUseCaseProvider = Provider.autoDispose(
+  (ref) => ValidateCredentialsUseCase(),
+);
 
 final class ValidateCredentialsUseCase {
   Future<bool> call(User user) async {
